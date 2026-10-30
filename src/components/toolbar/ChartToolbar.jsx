@@ -125,9 +125,9 @@ export default function ChartToolbar({
       label: "Time Interval",
       icon: Clock,
       value: String(interval ?? ""),
-      onChange: (value) => setInterval(Number(value)),
+      onChange: (value) => setInterval(value),
       options: TIME_INTERVALS.map((item) => ({
-        value: String(item.seconds),
+        value: item.id,
         label: item.label,
       })),
     },
