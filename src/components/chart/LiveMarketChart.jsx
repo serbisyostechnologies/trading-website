@@ -217,32 +217,64 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
 
     const chart = createChart(containerRef.current, {
       autoSize: true,
+
       layout: {
         background: {
           type: ColorType.Solid,
-          color: "#0b1220",
+          color: "#111827",
         },
         textColor: "#cbd5e1",
         attributionLogo: false,
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: 12,
       },
+
       grid: {
-        vertLines: { color: "#1e293b" },
-        horzLines: { color: "#1e293b" },
+        vertLines: {
+          color: "#1e293b",
+          style: 1,
+          visible: true,
+        },
+        horzLines: {
+          color: "#1e293b",
+          style: 1,
+          visible: true,
+        },
       },
+
       rightPriceScale: {
         borderColor: "#334155",
         autoScale: true,
+        textColor: "#cbd5e1",
+        entireTextOnly: true,
       },
+
       timeScale: {
         borderColor: "#334155",
         timeVisible: true,
         secondsVisible: false,
         rightOffset: 5,
+        ticksVisible: true,
+        barSpacing: 8,
+        minBarSpacing: 2,
       },
+
       crosshair: {
-        vertLine: { color: "#64748b" },
-        horzLine: { color: "#64748b" },
+        mode: 0,
+        vertLine: {
+          color: "#38bdf8",
+          width: 1,
+          style: 2,
+          labelBackgroundColor: "#0284c7",
+        },
+        horzLine: {
+          color: "#38bdf8",
+          width: 1,
+          style: 2,
+          labelBackgroundColor: "#0284c7",
+        },
       },
+
       handleScroll: true,
       handleScale: true,
     });
@@ -414,8 +446,7 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
     return selectedInterval.label;
   };
 
-  const capitalizeFirst = (str) =>
-  str.charAt(0).toUpperCase() + str.slice(1);
+  const capitalizeFirst = (str) => str.charAt(0).toUpperCase() + str.slice(1);
 
   return (
     <div className="market-screen">

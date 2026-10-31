@@ -9,8 +9,8 @@ body,
   width: 100%;
   min-height: 100%;
   margin: 0;
+  background: #ffffff;
 }
-
 
 /* Full screen area below any application header */
 .market-screen {
@@ -20,19 +20,21 @@ body,
   flex-direction: column;
   overflow: hidden;
   box-sizing: border-box;
+  background: #ffffff;
 }
 
 /* Toolbar occupies only its natural height */
-.market-screen > .chart-toolbar-tools {
+.market-screen>.chart-toolbar-tools {
   flex: 0 0 auto;
   width: 100%;
   box-sizing: border-box;
   margin: 0;
   z-index: 2;
+  background: #ffffff;
 }
 
 /* Remaining screen space belongs to the chart section */
-.market-screen > .live-market-chart {
+.market-screen>.live-market-chart {
   flex: 1 1 auto;
   min-height: 0;
   display: flex;
@@ -41,15 +43,15 @@ body,
 }
 
 /* Instrument and settings rows keep their natural heights */
-.live-market-chart > .chart-toolbar,
-.live-market-chart > .chart-settings,
-.live-market-chart > .chart-footer,
-.live-market-chart > .chart-error {
+.live-market-chart>.chart-toolbar,
+.live-market-chart>.chart-settings,
+.live-market-chart>.chart-footer,
+.live-market-chart>.chart-error {
   flex: 0 0 auto;
 }
 
 /* Chart consumes all remaining vertical space */
-.live-market-chart > .chart-canvas {
+.live-market-chart>.chart-canvas {
   flex: 1 1 auto;
   min-height: 0;
   width: 100%;
@@ -58,16 +60,15 @@ body,
 /* Main chart container */
 .live-market-chart {
   width: 100%;
-  height: 100vh;
-  height: 100dvh;
+  height: 100%;
   min-width: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 
-  border: 1px solid #263449;
-  background: #0b1220;
-  color: #e2e8f0;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #172033;
   font-family: Inter, system-ui, sans-serif;
 }
 
@@ -80,6 +81,7 @@ body,
   flex-wrap: wrap;
   gap: 12px;
   padding: 12px 16px;
+  background: #ffffff;
 }
 
 .chart-instrument,
@@ -95,6 +97,7 @@ body,
 }
 
 .chart-price strong {
+  color: #111827;
   font-size: 1.5rem;
   font-variant-numeric: tabular-nums;
   overflow-wrap: anywhere;
@@ -102,7 +105,7 @@ body,
 
 .chart-price span,
 .chart-instrument span {
-  color: #94a3b8;
+  color: #64748b;
   font-size: 0.8rem;
 }
 
@@ -115,24 +118,31 @@ body,
   flex-wrap: wrap;
   padding: 8px 16px;
 
-  border-top: 1px solid #263449;
-  border-bottom: 1px solid #263449;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .chart-settings label {
-  color: #94a3b8;
+  color: #475569;
   font-size: 0.85rem;
 }
 
 .chart-settings select {
   max-width: 100%;
   padding: 8px 12px;
-  border: 1px solid #475569;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
-  background: #172235;
-  color: #e2e8f0;
+  background: #ffffff;
+  color: #1e293b;
   font: inherit;
-  font-size: .8rem;
+  font-size: 0.8rem;
+  outline: none;
+}
+
+.chart-settings select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgb(37 99 235 / 12%);
 }
 
 /* Chart fills all remaining vertical space */
@@ -143,6 +153,7 @@ body,
   min-height: 0;
   min-width: 0;
   overflow: hidden;
+  background: #ffffff;
 }
 
 /* Footer */
@@ -155,22 +166,25 @@ body,
   gap: 10px;
   padding: 8px 16px;
 
-  border-top: 1px solid #263449;
-  color: #94a3b8;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  color: #64748b;
   font-size: 0.8rem;
 }
 
 .chart-footer button {
   padding: 6px 10px;
-  border: 1px solid #475569;
+  border: 1px solid #cbd5e1;
   border-radius: 6px;
-  background: #172235;
-  color: #e2e8f0;
+  background: #f8fafc;
+  color: #1e293b;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .chart-footer button:hover {
-  background: #263449;
+  background: #e2e8f0;
+  border-color: #94a3b8;
 }
 
 /* Error message */
@@ -178,9 +192,10 @@ body,
   flex: 0 0 auto;
   margin: 8px 12px;
   padding: 10px;
+  border: 1px solid #fecaca;
   border-radius: 6px;
-  background: #451a1a;
-  color: #fecaca;
+  background: #fef2f2;
+  color: #b91c1c;
 }
 
 /* Tablet */
