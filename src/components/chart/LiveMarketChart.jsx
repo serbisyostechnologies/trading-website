@@ -76,6 +76,7 @@ const INSTRUMENTS = [
 ];
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000";
+const CANDLE_SPACING = 8;
 
 const CHART_TYPES = [
   { value: "candlestick", label: "Candles" },
@@ -198,7 +199,7 @@ const getSeriesOptions = (type) => {
   }
 };
 
-export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
+export default function LiveMarketChart({ authToken }) {
   const containerRef = useRef(null);
   const chartRef = useRef(null);
   const seriesRef = useRef(null);
@@ -211,7 +212,6 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
   const [tick, setTick] = useState(null);
   const [error, setError] = useState("");
 
-  // Create the chart once.
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -255,9 +255,15 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
         secondsVisible: false,
         rightOffset: 5,
         ticksVisible: true,
-        barSpacing: 8,
-        minBarSpacing: 2,
+
+        barSpacing: CANDLE_SPACING,
+        minBarSpacing: CANDLE_SPACING,
+
+        fixLeftEdge: false,
+        fixRightEdge: false,
       },
+      handleScroll: true,
+      handleScale: false,
 
       crosshair: {
         mode: 0,
@@ -274,9 +280,6 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
           labelBackgroundColor: "#0284c7",
         },
       },
-
-      handleScroll: true,
-      handleScale: true,
     });
 
     chartRef.current = chart;
@@ -288,7 +291,6 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
     };
   }, []);
 
-  // Replace the series when the user changes chart style.
   useEffect(() => {
     const chart = chartRef.current;
     if (!chart) return;
@@ -308,7 +310,6 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
     return undefined;
   }, [chartType]);
 
-  // One Socket.IO connection for this chart component.
   useEffect(() => {
     if (!instrument) return;
 
@@ -345,9 +346,18 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
           const history = response.candles || [];
 
           candlesRef.current = history;
+
           seriesRef.current?.setData(toSeriesData(history, chartType));
 
-          chartRef.current?.timeScale().fitContent();
+          const timeScale = chartRef.current?.timeScale();
+
+          timeScale?.fitContent();
+
+          timeScale?.applyOptions({
+            barSpacing: CANDLE_SPACING,
+            minBarSpacing: CANDLE_SPACING,
+            rightOffset: 5,
+          });
 
           if (response.lastTick) {
             setTick(response.lastTick);
@@ -379,7 +389,6 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
       const candles = candlesRef.current;
       const last = candles[candles.length - 1];
 
-      // Update the current candle, or append a new one.
       if (last && last.time === candle.time) {
         candles[candles.length - 1] = candle;
       } else if (!last || candle.time > last.time) {
@@ -389,7 +398,6 @@ export default function LiveMarketChart({ symbol = "NIFTY", authToken }) {
           candles.shift();
         }
       } else {
-        // Ignore out-of-order candle updates.
         return;
       }
 
